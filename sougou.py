@@ -96,7 +96,7 @@ def store_to_html(data_str):
     # write to data_str.html
     file_name = 'data_str.txt'
     if len(data_str)>5000:
-        with open(file_name, 'w') as f:
+        with open(file_name, 'w',encoding='utf-8') as f:
             f.write(data_str)
             f.close()
     else:
@@ -107,7 +107,7 @@ def store_to_html(data_str):
 
 
 def get_gzh_url(file_name):
-    with open('data_str.txt','r') as f:
+    with open('data_str.txt','r',encoding='utf-8') as f:
         x = f.read()
         ar = re.findall('<div target="_blank" href="(.*)" class="wx-rb bg-blue wx-rb_v1 _item"',x)
         urlink = ar[0].replace('amp;','')
@@ -148,6 +148,7 @@ def main():
     get_proxy()
     check_proxy()
     data_str = get_content_from_url()
+    # 如果长时间不能获得有效ip,去除下面那一行的注释,用本机ip......
 #    data_str = get_weixin_content("http://weixin.sogou.com/weixin?type=1&query=%E6%B5%99%E6%B1%9F%E6%97%85%E6%B8%B8&ie=utf8&_sug_=n&_sug_type_=")
     file_name = store_to_html(data_str)
 #    urlink='http://mp.weixin.qq.com/profile?src=3&timestamp=1464597512&ver=1&signature=Tc58R6gWs7bU40Nufl15g2eoW9WQMjxcjMPsgf2T25ML4M22as2qs*rtCGIow2gDn7b1r*bkXpHWDmRAkFOdLQ=='

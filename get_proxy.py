@@ -11,7 +11,7 @@ import time
 
 def get_proxy():
     if not os.path.exists('proxy.txt'):
-        f = open('proxy.txt', 'w')
+        f = open('proxy.txt', 'w',encoding='utf-8')
         f.close()
     cur_time = time.time()
     file_time = os.path.getmtime('proxy.txt')
@@ -19,7 +19,7 @@ def get_proxy():
     if  int(abs(cur_time-file_time)) > 600 or os.path.getsize('proxy.txt') == 0:
         print('重新抓取待测IP')
 
-        of = open('proxy.txt', 'w+')
+        of = open('proxy.txt', 'w+',encoding='utf-8')
         for page in range(1,4):
 
             # start
@@ -77,7 +77,7 @@ def get_proxy():
 
 def check_proxy():
     if not os.path.exists('available.txt'):
-        f = open('available.txt', 'w')
+        f = open('available.txt', 'w',encoding='utf-8')
         f.close()
     cur_time = time.time()
     file_time = os.path.getmtime('available.txt')
@@ -85,8 +85,8 @@ def check_proxy():
     if  int(abs(cur_time-file_time)) > 600 or os.path.getsize('available.txt') == 0:
         print('重新检测IP可用性')
 
-        inFile = open('proxy.txt', 'r')
-        outFile = open('available.txt', 'w')
+        inFile = open('proxy.txt', 'r',encoding='utf-8')
+        outFile = open('available.txt', 'w',encoding='utf-8')
         url = 'http://www.lindenpat.com/search/detail/index?d=CN03819011@CN1675532A@20050928'
         lock = threading.Lock()
 
