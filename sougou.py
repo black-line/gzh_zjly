@@ -137,11 +137,12 @@ def get_weixin_content(urlink):
 def get_title(weixin_data):
     data = weixin_data
     ar = re.findall(r'{&quot;title&quot;:&quot;(.*?)&quot;,&quot;digest&quot;:&quot;',data)
-    title = ar
-    for ti in title:
+    innertitle = ar
+    title = []
+    for ti in innertitle:
         ti = ti.replace('&nbsp;','')
-        print(ti)
-
+        title.append(ti)
+    return title
 
 def main():
     get_proxy()
@@ -152,7 +153,14 @@ def main():
 #    urlink='http://mp.weixin.qq.com/profile?src=3&timestamp=1464597512&ver=1&signature=Tc58R6gWs7bU40Nufl15g2eoW9WQMjxcjMPsgf2T25ML4M22as2qs*rtCGIow2gDn7b1r*bkXpHWDmRAkFOdLQ=='
     urlink = get_gzh_url(file_name)
     weixin_data = get_weixin_content(urlink)
-    get_title(weixin_data)
+    title = get_title(weixin_data)
+
+    # 试试
+    for ti in title:
+        print(ti)
+
+
+
 
 if __name__ == '__main__':
         main()
