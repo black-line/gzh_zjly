@@ -94,30 +94,66 @@ def get_content_from_url(type='2',
 
 def store_to_html(data_str):
     # write to data_str.html
-    file_name = 'data_str.html'
+    file_name = 'data_str.txt'
     if len(data_str)>5000:
         with open(file_name, 'w') as f:
             f.write(data_str)
             f.close()
     else:
         print('暂无可用IP')
+        exit(-1)
 
     return file_name
 
 
-def formatted(file_name):
-    pass
+def get_gzh_url(file_name):
+    with open('data_str.txt','r') as f:
+        x = f.read()
+        ar = re.findall('<div target="_blank" href="(.*)" class="wx-rb bg-blue wx-rb_v1 _item"',x)
+        urlink = ar[0].replace('amp;','')
+        print('公众号url为: '+urlink)
+    f.close()
+    return urlink
+
+
+def get_weixin_content(urlink):
+    # start
+    url_xhr = urlink
+    req = urllib.request.Request(url_xhr)
+
+    # deal with cookies
+    cj = http.cookiejar.CookieJar()
+    pro = urllib.request.HTTPCookieProcessor(cj)
+
+    opener = urllib.request.build_opener(pro)
+    op = opener.open(req,timeout=3)
+
+    data_bytes = op.read()
+    data_str = bytes.decode(data_bytes)
+
+    return data_str
+
+
+def get_title(weixin_data):
+    data = weixin_data
+    ar = re.findall(r'{&quot;title&quot;:&quot;(.*?)&quot;,&quot;digest&quot;:&quot;',data)
+    title = ar
+    for ti in title:
+        ti = ti.replace('&nbsp;','')
+        print(ti)
 
 
 def main():
     get_proxy()
     check_proxy()
     data_str = get_content_from_url()
+#    data_str = get_weixin_content("http://weixin.sogou.com/weixin?type=1&query=%E6%B5%99%E6%B1%9F%E6%97%85%E6%B8%B8&ie=utf8&_sug_=n&_sug_type_=")
     file_name = store_to_html(data_str)
-    formatted(file_name)
-
+#    urlink='http://mp.weixin.qq.com/profile?src=3&timestamp=1464597512&ver=1&signature=Tc58R6gWs7bU40Nufl15g2eoW9WQMjxcjMPsgf2T25ML4M22as2qs*rtCGIow2gDn7b1r*bkXpHWDmRAkFOdLQ=='
+    urlink = get_gzh_url(file_name)
+    weixin_data = get_weixin_content(urlink)
+    get_title(weixin_data)
 
 if __name__ == '__main__':
-    for x in range(20):
         main()
 
