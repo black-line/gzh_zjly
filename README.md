@@ -1,4 +1,4 @@
-首先抓取http://www.xicidaili.com/nn/前3页的高匿IP保存到'proxy.txt'  
+首先抓取 http://www.xicidaili.com/nn/ 前3页的高匿IP保存到'proxy.txt'  
 每次程序运行时,若当前时间与'proxy.txt'文件的最近一次修改时间相差大于10分钟或'proxy.txt'文件内无内容则重新抓取  
 再检测'proxy.txt'文件内IP的可用性保存到'available.txt'  
 每次程序运行时,若当前时间与'available.txt'文件的最近一次修改时间相差大于10分钟或'available.txt'文件内无内容则重新抓取  
